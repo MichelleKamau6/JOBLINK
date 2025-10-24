@@ -21,6 +21,9 @@ export default function Navbar() {
             <Link to="/about" className="text-gray-700 hover:text-primary-600">
               About
             </Link>
+            <Link to="/reviews" className="text-gray-700 hover:text-primary-600">
+              Reviews
+            </Link>
             <Link to="/contact" className="text-gray-700 hover:text-primary-600">
               Contact
             </Link>
@@ -38,7 +41,17 @@ export default function Navbar() {
                 </Link>
                 {user.role === 'admin' && (
                   <Link to="/dashboard" className="text-gray-700 hover:text-primary-600">
-                    Dashboard
+                    Admin Dashboard
+                  </Link>
+                )}
+                {user.role === 'provider' && (
+                  <Link to="/provider-dashboard" className="text-gray-700 hover:text-primary-600">
+                    Provider Dashboard
+                  </Link>
+                )}
+                {user.role === 'customer' && (
+                  <Link to="/client-dashboard" className="text-gray-700 hover:text-primary-600">
+                    My Dashboard
                   </Link>
                 )}
                 <button 

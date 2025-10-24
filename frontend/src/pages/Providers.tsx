@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/authService';
 import ProviderCard from '../components/ProviderCard';
 import BookingModal from '../components/BookingModal';
-import Input from '../components/Input';
+import AdvancedSearch from '../components/AdvancedSearch';
 
 interface Provider {
   id: string;
@@ -25,7 +25,17 @@ export default function Providers() {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const navigate = useNavigate();
 
-  const categories = ['Cleaning', 'Plumbing', 'Electrical', 'Gardening', 'Handyman', 'Beauty', 'Tutoring', 'IT Support'];
+  const categories = [
+    'Cleaning', 'Plumbing', 'Electrical', 'Gardening', 'Beauty', 'IT Support',
+    'Painting', 'Catering', 'Photography', 'Tutoring', 'Handyman', 'Carpentry',
+    'Tailoring', 'Laundry', 'Security', 'Moving', 'Pet Care', 'Childcare',
+    'Massage Therapy', 'Hair Styling', 'Makeup Artist', 'Event Planning',
+    'Interior Design', 'Landscaping', 'Pool Maintenance', 'HVAC', 'Roofing',
+    'Flooring', 'Tiling', 'Welding', 'Auto Repair', 'Appliance Repair',
+    'Computer Repair', 'Phone Repair', 'Web Design', 'Graphic Design',
+    'Accounting', 'Legal Services', 'Real Estate', 'Insurance', 'Fitness Training',
+    'Yoga Instruction', 'Music Lessons', 'Language Tutoring', 'Academic Tutoring'
+  ];
 
   useEffect(() => {
     const fetchProviders = async () => {
@@ -73,31 +83,11 @@ export default function Providers() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Service Providers</h1>
       
-      {/* Filters */}
-      <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          label="Search by location"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter city or area..."
-        />
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Service Category
-          </label>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-          >
-            <option value="">All Categories</option>
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <AdvancedSearch onSearch={(filters) => {
+        setSearchTerm(filters.location);
+        setSelectedCategory(filters.category);
+        // Additional filter logic can be added here
+      }} />
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {providers.map((provider) => (

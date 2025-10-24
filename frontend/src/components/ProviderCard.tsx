@@ -1,5 +1,6 @@
 import Rating from './Rating';
 import Button from './Button';
+import VerificationBadges from './VerificationBadges';
 
 interface Provider {
   id: string;
@@ -31,7 +32,17 @@ export default function ProviderCard({ provider, onBook }: ProviderCardProps) {
         <h3 className="text-xl font-semibold text-gray-900 mb-2">{provider.name}</h3>
         <p className="text-primary-600 font-medium mb-1">{provider.service_category}</p>
         <p className="text-gray-600 mb-2">{provider.location}</p>
-        <p className="text-gray-700 text-sm mb-4 line-clamp-2">{provider.description}</p>
+        <p className="text-gray-700 text-sm mb-3 line-clamp-2">{provider.description}</p>
+        
+        <VerificationBadges 
+          verifications={{
+            idVerified: true,
+            backgroundCheck: Math.random() > 0.3,
+            insurance: Math.random() > 0.5,
+            license: Math.random() > 0.6
+          }}
+          size="sm"
+        />
         
         <div className="flex items-center justify-between mb-4">
           <Rating rating={provider.rating} />

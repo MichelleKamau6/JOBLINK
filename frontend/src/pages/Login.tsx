@@ -7,7 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, getDashboardPath } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -17,7 +17,10 @@ export default function Login() {
 
     try {
       await login(email, password);
-      navigate('/');
+      // Wait a moment for user state to update, then navigate to appropriate dashboard
+      setTimeout(() => {
+        navigate(getDashboardPath());
+      }, 100);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

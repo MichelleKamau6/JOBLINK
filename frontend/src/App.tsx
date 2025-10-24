@@ -11,7 +11,14 @@ import Dashboard from './pages/Dashboard';
 import Bookings from './pages/Bookings';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Reviews from './pages/Reviews';
 import Payment from './pages/Payment';
+import ClientDashboard from './pages/ClientDashboard';
+import ProviderDashboard from './pages/ProviderDashboard';
+import HelpCenter from './pages/HelpCenter';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Footer from './components/Footer';
+import LiveChat from './components/LiveChat';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -51,7 +58,26 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/client-dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <ClientDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/provider-dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="provider">
+                    <ProviderDashboard />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/about" element={<About />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/help" element={<HelpCenter />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/contact" element={<Contact />} />
               <Route 
                 path="/payment" 
@@ -63,6 +89,8 @@ function App() {
               />
             </Routes>
           </main>
+          <Footer />
+          <LiveChat />
         </div>
       </Router>
     </AuthProvider>
