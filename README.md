@@ -40,8 +40,17 @@ flask run
 
 ## Environment Setup
 
-1. Copy `.env.example` to `.env` in both frontend and backend directories
-2. Update environment variables with your configuration
+1. Copy `.env.example` to `.env` in both frontend and backend directories:
+   ```bash
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   ```
+
+2. Update environment variables with your configuration:
+   - Get Cloudinary credentials from https://cloudinary.com
+   - Get SendGrid API key from https://sendgrid.com
+   - Get M-Pesa credentials from Safaricom Developer Portal
+
 3. Set up integrations (Cloudinary, SendGrid, M-Pesa)
 
 ## Development Workflow
