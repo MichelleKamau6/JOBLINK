@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Providers from './pages/Providers';
 import ProviderProfile from './pages/ProviderProfile';
-import Profile from './pages/Profile';
+import ProfileRouter from './pages/ProfileRouter';
 import Dashboard from './pages/Dashboard';
 import Bookings from './pages/Bookings';
 import About from './pages/About';
@@ -38,7 +38,7 @@ function App() {
                 path="/profile" 
                 element={
                   <ProtectedRoute>
-                    <Profile />
+                    <ProfileRouter />
                   </ProtectedRoute>
                 } 
               />
