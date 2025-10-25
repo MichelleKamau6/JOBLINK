@@ -59,34 +59,39 @@ if __name__ == '__main__':
     app = create_app()
     
     # Initialize database on first run
-    with app.app_context():
-        from models import Role, ServiceCategory, User
-        db.create_all()
-        
-        # Create roles if they don't exist
-        for role_name in ['client', 'provider', 'admin']:
-            if not Role.query.filter_by(name=role_name).first():
-                role = Role(name=role_name)
-                db.session.add(role)
-        
-        # Create service categories if they don't exist
-        categories = [
-            {'name': 'Cleaning', 'description': 'Home and office cleaning services'},
-            {'name': 'Plumbing', 'description': 'Plumbing repairs and installations'},
-            {'name': 'Electrical', 'description': 'Electrical repairs and installations'},
-            {'name': 'Gardening', 'description': 'Garden maintenance and landscaping'},
-            {'name': 'Handyman', 'description': 'General home repairs and maintenance'},
-            {'name': 'Beauty', 'description': 'Beauty and wellness services'},
-            {'name': 'Tutoring', 'description': 'Educational and tutoring services'},
-            {'name': 'IT Support', 'description': 'Computer and technology support'}
-        ]
-        
-        for cat_data in categories:
-            if not ServiceCategory.query.filter_by(name=cat_data['name']).first():
-                category = ServiceCategory(**cat_data)
-                db.session.add(category)
-        
-        db.session.commit()
+    try:
+        with app.app_context():
+            from models import Role, ServiceCategory, User
+            db.create_all()
+            
+            # Create roles if they don't exist
+            for role_name in ['client', 'provider', 'admin']:
+                if not Role.query.filter_by(name=role_name).first():
+                    role = Role(name=role_name)
+                    db.session.add(role)
+            
+            # Create service categories if they don't exist
+            categories = [
+                {'name': 'Cleaning', 'description': 'Home and office cleaning services'},
+                {'name': 'Plumbing', 'description': 'Plumbing repairs and installations'},
+                {'name': 'Electrical', 'description': 'Electrical repairs and installations'},
+                {'name': 'Gardening', 'description': 'Garden maintenance and landscaping'},
+                {'name': 'Handyman', 'description': 'General home repairs and maintenance'},
+                {'name': 'Beauty', 'description': 'Beauty and wellness services'},
+                {'name': 'Tutoring', 'description': 'Educational and tutoring services'},
+                {'name': 'IT Support', 'description': 'Computer and technology support'}
+            ]
+            
+            for cat_data in categories:
+                if not ServiceCategory.query.filter_by(name=cat_data['name']).first():
+                    category = ServiceCategory(**cat_data)
+                    db.session.add(category)
+            
+            db.session.commit()
+            print("Database initialized successfully")
+    except Exception as e:
+        print(f"Database initialization error: {e}")
     
     port = int(os.environ.get('PORT', 5000))
+    print(f"Starting server on port {port}")
     app.run(host='0.0.0.0', port=port, debug=False)
