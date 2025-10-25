@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { User, Mail, Phone, MapPin, Calendar, Star, CreditCard, Edit3, Camera, Heart } from 'lucide-react';
+import { User, Mail, MapPin, Calendar, Star, CreditCard, Edit3, Camera, Heart } from 'lucide-react';
 import Button from '../components/Button';
 import LocationPicker from '../components/LocationPicker';
 

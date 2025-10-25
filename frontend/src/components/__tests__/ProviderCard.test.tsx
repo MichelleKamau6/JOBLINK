@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import ProviderCard from '../ProviderCard';
 
 const mockProvider = {
-  id: '1',
+  id: 1,
   name: 'Test Provider',
   service_category: 'Cleaning',
   location: 'Test City',
@@ -21,7 +21,7 @@ describe('ProviderCard', () => {
     expect(screen.getByText('Test Provider')).toBeInTheDocument();
     expect(screen.getByText('Cleaning')).toBeInTheDocument();
     expect(screen.getByText('Test City')).toBeInTheDocument();
-    expect(screen.getByText('$25/hr')).toBeInTheDocument();
+    expect(screen.getByText('KSh 25/hr')).toBeInTheDocument();
   });
 
   it('calls onBook when Book Now button is clicked', () => {

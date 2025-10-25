@@ -21,7 +21,8 @@ describe('Login', () => {
       user: null,
       login: vi.fn(),
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/')
     });
   });
 
@@ -38,7 +39,8 @@ describe('Login', () => {
       user: null,
       login: mockLogin,
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/')
     });
 
     renderLogin();

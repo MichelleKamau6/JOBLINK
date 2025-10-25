@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, Star, Clock, CreditCard, Search, Plus } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 export default function ClientDashboard() {
   const { user } = useAuth();
-  const [recentBookings, setRecentBookings] = useState([
+  const [recentBookings] = useState([
     {
       id: 1,
       provider: 'John Mwangi',

@@ -31,4 +31,32 @@ export const authService = {
   }
 };
 
+export const providerService = {
+  async searchProviders(filters: {
+    search?: string;
+    category?: string;
+    location?: string;
+    min_rate?: number;
+    max_rate?: number;
+    min_rating?: number;
+    sort_by?: string;
+    page?: number;
+  }) {
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== '') {
+        params.append(key, value.toString());
+      }
+    });
+    
+    const response = await api.get(`/providers?${params}`);
+    return response.data;
+  },
+
+  async getProvider(id: number) {
+    const response = await api.get(`/providers/${id}`);
+    return response.data;
+  }
+};
+
 export default api;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Providers API</title>
+</head>
+<body>
+    <h1>Providers API Test</h1>
+    <button onclick="testProviders()">Test Providers API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testProviders() {
+            try {
+                const response = await fetch('http://localhost:5000/api/providers');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<pre>Error: ${error.message}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>

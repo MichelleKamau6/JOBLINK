@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, DollarSign, Star, Users, TrendingUp, Clock, MapPin, Phone } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 export default function ProviderDashboard() {
   const { user } = useAuth();
-  const [bookings, setBookings] = useState([
+  const [bookings] = useState([
     {
       id: 1,
       client: 'Mary Wanjiku',

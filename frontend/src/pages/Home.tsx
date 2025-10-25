@@ -1,10 +1,26 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, Users, Clock, Shield, Star, ArrowRight } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
 import Hero from '../components/Hero';
 import ServiceCategories from '../components/ServiceCategories';
+import ClientHome from '../components/ClientHome';
+import ProviderHome from '../components/ProviderHome';
 import Button from '../components/Button';
 
 export default function Home() {
+  const { user } = useAuth();
+
+  // Show role-specific homepage for logged-in users
+  if (user) {
+    if (user.role === 'provider') {
+      return <ProviderHome />;
+    }
+    if (user.role === 'client') {
+      return <ClientHome />;
+    }
+  }
+
+  // Default homepage for non-logged-in users
   return (
     <div>
       <Hero />

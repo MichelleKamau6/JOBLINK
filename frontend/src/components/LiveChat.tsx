@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { MessageCircle, X, Send, User } from 'lucide-react';
-import Button from './Button';
 
 export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);

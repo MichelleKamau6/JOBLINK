@@ -3,12 +3,13 @@ import Button from './Button';
 import VerificationBadges from './VerificationBadges';
 
 interface Provider {
-  id: string;
+  id: number;
   name: string;
   service_category: string;
   location: string;
   hourly_rate: number;
   rating: number;
+  review_count?: number;
   image_url?: string;
   description: string;
 }
@@ -45,14 +46,19 @@ export default function ProviderCard({ provider, onBook }: ProviderCardProps) {
         />
         
         <div className="flex items-center justify-between mb-4">
-          <Rating rating={provider.rating} />
+          <div className="flex items-center">
+            <Rating rating={provider.rating} />
+            {provider.review_count !== undefined && (
+              <span className="text-sm text-gray-500 ml-2">({provider.review_count})</span>
+            )}
+          </div>
           <span className="text-lg font-bold text-gray-900">
-            ${provider.hourly_rate}/hr
+            KSh {provider.hourly_rate}/hr
           </span>
         </div>
         
         <Button 
-          onClick={() => onBook(provider.id)}
+          onClick={() => onBook(provider.id.toString())}
           className="w-full"
         >
           Book Now

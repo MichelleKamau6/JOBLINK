@@ -8,13 +8,13 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-import app
+from app import create_app
 from extensions import db
 from models import Role, User, ServiceCategory
 from werkzeug.security import generate_password_hash
 
 def init_database():
-    app = app.create_app()
+    app = create_app()
     
     with app.app_context():
         # Create all tables

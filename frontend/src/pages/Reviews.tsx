@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, Filter, Search, ThumbsUp, Calendar, User } from 'lucide-react';
+import { Filter, Search, ThumbsUp, Calendar, User } from 'lucide-react';
 import Button from '../components/Button';
 import Rating from '../components/Rating';
 

@@ -27,7 +27,8 @@ describe('Navbar', () => {
       user: null,
       login: vi.fn(),
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/')
     });
 
     renderNavbar();
@@ -39,7 +40,8 @@ describe('Navbar', () => {
       user: null,
       login: vi.fn(),
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/')
     });
 
     renderNavbar();
@@ -51,7 +53,8 @@ describe('Navbar', () => {
       user: { id: '1', email: 'test@example.com', name: 'Test User', role: 'client' },
       login: vi.fn(),
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/client-dashboard')
     });
 
     renderNavbar();
@@ -64,10 +67,11 @@ describe('Navbar', () => {
       user: { id: '1', email: 'admin@example.com', name: 'Admin User', role: 'admin' },
       login: vi.fn(),
       logout: vi.fn(),
-      loading: false
+      loading: false,
+      getDashboardPath: vi.fn(() => '/dashboard')
     });
 
     renderNavbar();
-    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
   });
 });

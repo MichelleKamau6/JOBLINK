@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { User, Mail, Phone, MapPin, DollarSign, Star, Award, Camera, Upload, Plus, Edit3 } from 'lucide-react';
+import { User, Mail, MapPin, DollarSign, Star, Award, Camera, Upload, Plus, Edit3 } from 'lucide-react';
 import Button from '../components/Button';
 import VerificationBadges from '../components/VerificationBadges';
 import LocationPicker from '../components/LocationPicker';
