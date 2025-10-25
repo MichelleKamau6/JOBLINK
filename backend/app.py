@@ -14,10 +14,10 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///joblink.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
     
     # Initialize extensions
     db.init_app(app)
@@ -57,4 +57,36 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    
+    # Initialize database on first run
+    with app.app_context():
+        from models import Role, ServiceCategory, User
+        db.create_all()
+        
+        # Create roles if they don't exist
+        for role_name in ['client', 'provider', 'admin']:
+            if not Role.query.filter_by(name=role_name).first():
+                role = Role(name=role_name)
+                db.session.add(role)
+        
+        # Create service categories if they don't exist
+        categories = [
+            {'name': 'Cleaning', 'description': 'Home and office cleaning services'},
+            {'name': 'Plumbing', 'description': 'Plumbing repairs and installations'},
+            {'name': 'Electrical', 'description': 'Electrical repairs and installations'},
+            {'name': 'Gardening', 'description': 'Garden maintenance and landscaping'},
+            {'name': 'Handyman', 'description': 'General home repairs and maintenance'},
+            {'name': 'Beauty', 'description': 'Beauty and wellness services'},
+            {'name': 'Tutoring', 'description': 'Educational and tutoring services'},
+            {'name': 'IT Support', 'description': 'Computer and technology support'}
+        ]
+        
+        for cat_data in categories:
+            if not ServiceCategory.query.filter_by(name=cat_data['name']).first():
+                category = ServiceCategory(**cat_data)
+                db.session.add(category)
+        
+        db.session.commit()
+    
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
