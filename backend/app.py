@@ -56,75 +56,7 @@ def create_app():
             }
         }
     
-    # Seed data route
-    @app.route('/seed-data')
-    def seed_data():
-        from models import User, Role, ServiceCategory, ProviderProfile
-        
-        try:
-            provider_role = Role.query.filter_by(name='provider').first()
-            
-            providers_data = [
-                {
-                    'name': 'John Mwangi',
-                    'email': 'john.cleaning@example.com',
-                    'business_name': 'John\'s Premium Cleaning',
-                    'category': 'Cleaning',
-                    'location': 'Nairobi',
-                    'rate': 2000,
-                    'description': 'Professional house and office cleaning services'
-                },
-                {
-                    'name': 'Sarah Wanjiku',
-                    'email': 'sarah.plumbing@example.com',
-                    'business_name': 'Sarah\'s Expert Plumbing',
-                    'category': 'Plumbing',
-                    'location': 'Kiambu',
-                    'rate': 3500,
-                    'description': 'Licensed plumber with 10+ years experience'
-                },
-                {
-                    'name': 'David Kimani',
-                    'email': 'david.electric@example.com',
-                    'business_name': 'David\'s Electrical Solutions',
-                    'category': 'Electrical',
-                    'location': 'Nairobi',
-                    'rate': 4000,
-                    'description': 'Certified electrician specializing in home wiring'
-                }
-            ]
-            
-            for data in providers_data:
-                if User.query.filter_by(email=data['email']).first():
-                    continue
-                    
-                user = User(
-                    email=data['email'],
-                    name=data['name'],
-                    role_id=provider_role.id,
-                    is_verified=True
-                )
-                user.set_password('provider123')
-                db.session.add(user)
-                db.session.flush()
-                
-                category = ServiceCategory.query.filter_by(name=data['category']).first()
-                
-                provider = ProviderProfile(
-                    user_id=user.id,
-                    service_category_id=category.id,
-                    business_name=data['business_name'],
-                    description=data['description'],
-                    location=data['location'],
-                    hourly_rate=data['rate'],
-                    is_active=True
-                )
-                db.session.add(provider)
-            
-            db.session.commit()
-            return {'message': 'Sample data seeded successfully!', 'providers_added': len(providers_data)}
-        except Exception as e:
-            return {'error': str(e)}, 500
+
     
     # Register blueprints
     app.register_blueprint(auth.bp, url_prefix='/api/auth')
@@ -145,8 +77,10 @@ if __name__ == '__main__':
     # Initialize database on first run
     try:
         with app.app_context():
-            from models import Role, ServiceCategory, User
             db.create_all()
+            
+            # Import models after app context is created
+            from models import Role, ServiceCategory, User
             
             # Create roles if they don't exist
             for role_name in ['client', 'provider', 'admin']:
@@ -171,68 +105,32 @@ if __name__ == '__main__':
                     category = ServiceCategory(**cat_data)
                     db.session.add(category)
             
-            db.session.commit()
+            # Create admin user
+            admin_role = Role.query.filter_by(name='admin').first()
+            if admin_role and not User.query.filter_by(email='admin@joblink.com').first():
+                admin_user = User(
+                    email='admin@joblink.com',
+                    name='Admin User',
+                    role_id=admin_role.id,
+                    is_verified=True
+                )
+                admin_user.set_password('admin123')
+                db.session.add(admin_user)
             
-            # Add sample providers
-            provider_role = Role.query.filter_by(name='provider').first()
-            
-            providers_data = [
-                {
-                    'name': 'John Mwangi',
-                    'email': 'john.cleaning@example.com',
-                    'business_name': 'John\'s Premium Cleaning',
-                    'category': 'Cleaning',
-                    'location': 'Nairobi',
-                    'rate': 2000,
-                    'description': 'Professional house and office cleaning services'
-                },
-                {
-                    'name': 'Sarah Wanjiku',
-                    'email': 'sarah.plumbing@example.com',
-                    'business_name': 'Sarah\'s Expert Plumbing',
-                    'category': 'Plumbing',
-                    'location': 'Kiambu',
-                    'rate': 3500,
-                    'description': 'Licensed plumber with 10+ years experience'
-                },
-                {
-                    'name': 'David Kimani',
-                    'email': 'david.electric@example.com',
-                    'business_name': 'David\'s Electrical Solutions',
-                    'category': 'Electrical',
-                    'location': 'Nairobi',
-                    'rate': 4000,
-                    'description': 'Certified electrician specializing in home wiring'
-                }
-            ]
-            
-            for data in providers_data:
-                if not User.query.filter_by(email=data['email']).first():
-                    user = User(
-                        email=data['email'],
-                        name=data['name'],
-                        role_id=provider_role.id,
-                        is_verified=True
-                    )
-                    user.set_password('provider123')
-                    db.session.add(user)
-                    db.session.flush()
-                    
-                    category = ServiceCategory.query.filter_by(name=data['category']).first()
-                    
-                    provider = ProviderProfile(
-                        user_id=user.id,
-                        service_category_id=category.id,
-                        business_name=data['business_name'],
-                        description=data['description'],
-                        location=data['location'],
-                        hourly_rate=data['rate'],
-                        is_active=True
-                    )
-                    db.session.add(provider)
+            # Create sample client
+            client_role = Role.query.filter_by(name='client').first()
+            if client_role and not User.query.filter_by(email='client@example.com').first():
+                client_user = User(
+                    email='client@example.com',
+                    name='John Doe',
+                    role_id=client_role.id,
+                    is_verified=True
+                )
+                client_user.set_password('client123')
+                db.session.add(client_user)
             
             db.session.commit()
-            print("Database initialized successfully with sample data")
+            print("Database initialized successfully")
     except Exception as e:
         print(f"Database initialization error: {e}")
     
