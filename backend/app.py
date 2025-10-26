@@ -23,7 +23,7 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt = JWTManager(app)
-    CORS(app)
+    CORS(app, origins=['*'], allow_headers=['Content-Type', 'Authorization'], methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
     
     # Swagger configuration
     swagger_config = {
@@ -52,7 +52,7 @@ def create_app():
                 'providers': '/api/providers',
                 'auth': '/api/auth',
                 'docs': '/api/docs',
-                'seed': '/seed-data'
+                'create-admin': '/create-admin'
             }
         }
     
@@ -68,6 +68,33 @@ def create_app():
     app.register_blueprint(reviews.bp, url_prefix='/api/reviews')
     app.register_blueprint(analytics.bp, url_prefix='/api/analytics')
     app.register_blueprint(notifications.bp, url_prefix='/api/notifications')
+    
+    # Create admin user route
+    @app.route('/create-admin')
+    def create_admin():
+        from models import User, Role
+        try:
+            admin_role = Role.query.filter_by(name='admin').first()
+            if not admin_role:
+                return {'error': 'Admin role not found'}, 400
+                
+            existing_admin = User.query.filter_by(email='admin@joblink.com').first()
+            if existing_admin:
+                return {'message': 'Admin user already exists'}
+                
+            admin_user = User(
+                email='admin@joblink.com',
+                name='Admin User',
+                role_id=admin_role.id,
+                is_verified=True
+            )
+            admin_user.set_password('admin123')
+            db.session.add(admin_user)
+            db.session.commit()
+            
+            return {'message': 'Admin user created successfully', 'email': 'admin@joblink.com', 'password': 'admin123'}
+        except Exception as e:
+            return {'error': str(e)}, 500
     
     return app
 
