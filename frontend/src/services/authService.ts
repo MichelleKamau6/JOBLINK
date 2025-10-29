@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'https://joblink-1mhk.onrender.com/api';
+
+console.log('API_URL:', API_URL);
+console.log('Environment:', import.meta.env);
 
 const api = axios.create({
   baseURL: API_URL,
