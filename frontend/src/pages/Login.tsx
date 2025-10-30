@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -21,8 +21,8 @@ export default function Login() {
       setTimeout(() => {
         navigate(getDashboardPath());
       }, 100);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+    } catch (err) {
+      setError((err as Error & { response?: { data?: { message?: string } } }).response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
     }

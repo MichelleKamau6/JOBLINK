@@ -35,7 +35,7 @@ def create_review():
       201:
         description: Review created successfully
     """
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     booking = Booking.query.get_or_404(data['booking_id'])

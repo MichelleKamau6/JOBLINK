@@ -1,8 +1,8 @@
 import pytest
 import json
 from app import create_app
-from app.extensions import db
-from app.models import User, Role
+from extensions import db
+from models import User, Role
 
 @pytest.fixture
 def app():
@@ -13,10 +13,13 @@ def app():
     with app.app_context():
         db.create_all()
         
-        # Create roles
-        client_role = Role(name='client')
-        admin_role = Role(name='admin')
-        db.session.add_all([client_role, admin_role])
+        # Create roles if they don't exist
+        if not Role.query.filter_by(name='client').first():
+            client_role = Role(name='client')
+            db.session.add(client_role)
+        if not Role.query.filter_by(name='admin').first():
+            admin_role = Role(name='admin')
+            db.session.add(admin_role)
         db.session.commit()
         
         yield app

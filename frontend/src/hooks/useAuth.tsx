@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
 import { authService } from '../services/authService';
 
 interface User {
@@ -16,7 +16,7 @@ interface AuthContextType {
   getDashboardPath: () => string;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -66,3 +66,5 @@ export function useAuth() {
   }
   return context;
 }
+
+

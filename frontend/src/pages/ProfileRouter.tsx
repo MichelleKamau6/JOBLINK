@@ -1,4 +1,4 @@
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 import ClientProfile from './ClientProfile';
 import ProviderProfile from './ProviderProfile';
 

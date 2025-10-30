@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, DollarSign, Star, Users, TrendingUp, Clock, MapPin, Phone } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 import Button from '../components/Button';
 
 export default function ProviderDashboard() {

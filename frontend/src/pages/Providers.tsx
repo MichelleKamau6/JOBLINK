@@ -36,7 +36,6 @@ export default function Providers() {
 
 
   const searchProviders = async (filters: FilterType) => {
-    console.log('Searching providers with filters:', filters);
     setLoading(true);
     setError('');
     try {
@@ -49,10 +48,8 @@ export default function Providers() {
         min_rating: filters.min_rating ? Number(filters.min_rating) : undefined,
         sort_by: filters.sort_by || 'name_asc'
       });
-      console.log('Search result:', result);
       setSearchResult(result);
     } catch (err) {
-      console.error('Search error:', err);
       setError('Failed to search providers. Please try again.');
     } finally {
       setLoading(false);
@@ -79,14 +76,13 @@ export default function Providers() {
     }
   };
 
-  const handleBookingSubmit = async (_bookingData: any) => {
+  const handleBookingSubmit = async () => {
     try {
       // await api.post('/bookings', bookingData);
       setShowBookingModal(false);
       alert('Booking submitted successfully!');
       navigate('/bookings');
     } catch (error) {
-      console.error('Booking failed:', error);
       alert('Booking failed. Please try again.');
     }
   };

@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import type { MapContainerProps } from 'react-leaflet';
 
 interface Provider {
   id: string;
@@ -14,12 +15,12 @@ interface ProviderMapProps {
   center: [number, number];
 }
 
-const AnyMapContainer = MapContainer as unknown as any;
+const TypedMapContainer = MapContainer as React.ComponentType<MapContainerProps>;
 
 export default function ProviderMap({ providers, center }: ProviderMapProps) {
   return (
     <div className="h-96 w-full rounded-lg overflow-hidden">
-      <AnyMapContainer center={center} zoom={13} className="h-full w-full">
+      <TypedMapContainer center={center} zoom={13} className="h-full w-full">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
@@ -33,7 +34,7 @@ export default function ProviderMap({ providers, center }: ProviderMapProps) {
             </Popup>
           </Marker>
         ))}
-      </AnyMapContainer>
+      </TypedMapContainer>
       <div className="text-xs text-gray-500 mt-1">© OpenStreetMap contributors</div>
     </div>
   );

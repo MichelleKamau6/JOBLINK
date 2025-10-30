@@ -1,9 +1,7 @@
 import axios from 'axios';
+import type { RegisterData } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://joblink-1mhk.onrender.com/api';
-
-console.log('API_URL:', API_URL);
-console.log('Environment:', import.meta.env);
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -28,7 +26,7 @@ export const authService = {
     return response.data;
   },
 
-  async register(userData: any) {
+  async register(userData: RegisterData) {
     const response = await api.post('/auth/register', userData);
     return response.data;
   }

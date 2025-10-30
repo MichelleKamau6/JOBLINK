@@ -39,7 +39,7 @@ def create_booking():
       201:
         description: Booking created successfully
     """
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     provider = ProviderProfile.query.get_or_404(data['provider_id'])
@@ -78,7 +78,7 @@ def get_bookings():
       200:
         description: List of user bookings
     """
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     bookings = Booking.query.filter_by(client_id=user_id).all()
     
     return jsonify([{

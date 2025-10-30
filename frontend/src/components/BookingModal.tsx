@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import Input from './Input';
 import Button from './Button';
+import type { BookingData } from '../types';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface BookingModalProps {
     name: string;
     hourly_rate: number;
   } | null;
-  onSubmit: (bookingData: any) => void;
+  onSubmit: (bookingData: BookingData) => void;
 }
 
 export default function BookingModal({ isOpen, onClose, provider, onSubmit }: BookingModalProps) {

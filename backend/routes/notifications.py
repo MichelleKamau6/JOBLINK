@@ -20,7 +20,7 @@ def send_verification_email():
       200:
         description: Verification email sent
     """
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get_or_404(user_id)
     
     if user.is_verified:
@@ -80,7 +80,7 @@ def test_email():
       200:
         description: Test email sent
     """
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get_or_404(user_id)
     
     # Test booking confirmation email

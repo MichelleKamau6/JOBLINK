@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, Star, Clock, CreditCard, Search, Plus } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 import Button from '../components/Button';
 
 export default function ClientDashboard() {

@@ -6,7 +6,7 @@ from services.mpesa_service import MPesaService
 class TestEmailService:
     def test_send_booking_confirmation(self):
         """Test booking confirmation email"""
-        with patch('app.services.email_service.SendGridAPIClient') as mock_sg:
+        with patch('services.email_service.SendGridAPIClient') as mock_sg:
             email_service = EmailService()
             
             booking_data = {
@@ -26,7 +26,7 @@ class TestEmailService:
 
     def test_send_verification_email(self):
         """Test verification email"""
-        with patch('app.services.email_service.SendGridAPIClient') as mock_sg:
+        with patch('services.email_service.SendGridAPIClient') as mock_sg:
             email_service = EmailService()
             
             result = email_service.send_verification_email('test@example.com', 'test-token')
@@ -43,7 +43,7 @@ class TestMPesaService:
         assert timestamp is not None
         assert len(timestamp) == 14  # YYYYMMDDHHMMSS format
 
-    @patch('app.services.mpesa_service.requests.get')
+    @patch('services.mpesa_service.requests.get')
     def test_get_access_token(self, mock_get):
         """Test M-Pesa access token retrieval"""
         mock_response = MagicMock()
@@ -55,8 +55,8 @@ class TestMPesaService:
         
         assert token == 'test-token'
 
-    @patch('app.services.mpesa_service.requests.post')
-    @patch('app.services.mpesa_service.MPesaService.get_access_token')
+    @patch('services.mpesa_service.requests.post')
+    @patch('services.mpesa_service.MPesaService.get_access_token')
     def test_initiate_stk_push(self, mock_token, mock_post):
         """Test STK Push initiation"""
         mock_token.return_value = 'test-token'

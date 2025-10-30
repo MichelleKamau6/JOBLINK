@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import Navbar from '../Navbar';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuthHook';
 
 // Mock the useAuth hook
 vi.mock('../../hooks/useAuth');

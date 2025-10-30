@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import Login from '../../pages/Login';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuthHook';
 
 vi.mock('../../hooks/useAuth');
 const mockUseAuth = vi.mocked(useAuth);

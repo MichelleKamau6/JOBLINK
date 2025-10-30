@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, Users, Clock, Shield, Star, ArrowRight } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 import Hero from '../components/Hero';
 import ServiceCategories from '../components/ServiceCategories';
 import ClientHome from '../components/ClientHome';

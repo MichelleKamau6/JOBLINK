@@ -11,7 +11,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from app import create_app
 from extensions import db
 from models import Role, User, ServiceCategory
-from werkzeug.security import generate_password_hash
 
 def init_database():
     app = create_app()

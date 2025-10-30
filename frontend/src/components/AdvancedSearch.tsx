@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { Search, Filter, MapPin, DollarSign, Star, Calendar } from 'lucide-react';
 import Button from './Button';
+import type { SearchFilters } from '../types';
 
 interface AdvancedSearchProps {
-  onSearch: (filters: any) => void;
+  onSearch: (filters: SearchFilters) => void;
 }
 
 export default function AdvancedSearch({ onSearch }: AdvancedSearchProps) {
   const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<SearchFilters>({
     keyword: '',
     location: '',
     category: '',
-    priceRange: [0, 10000],
+    priceRange: [0, 10000] as [number, number],
     rating: 0,
     availability: '',
     verified: false,

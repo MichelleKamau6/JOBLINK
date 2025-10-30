@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuthHook';
 import { User, Mail, MapPin, DollarSign, Star, Award, Camera, Upload, Plus, Edit3 } from 'lucide-react';
 import Button from '../components/Button';
 import VerificationBadges from '../components/VerificationBadges';

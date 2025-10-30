@@ -1,8 +1,8 @@
 import pytest
 import json
 from app import create_app
-from app.extensions import db
-from app.models import User, Role, ServiceCategory, ProviderProfile, Booking
+from extensions import db
+from models import User, Role, ServiceCategory, ProviderProfile, Booking
 
 @pytest.fixture
 def app():
@@ -13,11 +13,16 @@ def app():
     with app.app_context():
         db.create_all()
         
-        # Create test data
-        client_role = Role(name='client')
-        provider_role = Role(name='provider')
-        category = ServiceCategory(name='Cleaning')
-        db.session.add_all([client_role, provider_role, category])
+        # Create test data if they don't exist
+        if not Role.query.filter_by(name='client').first():
+            client_role = Role(name='client')
+            db.session.add(client_role)
+        if not Role.query.filter_by(name='provider').first():
+            provider_role = Role(name='provider')
+            db.session.add(provider_role)
+        if not ServiceCategory.query.filter_by(name='Cleaning').first():
+            category = ServiceCategory(name='Cleaning')
+            db.session.add(category)
         db.session.commit()
         
         yield app

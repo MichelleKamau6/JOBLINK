@@ -2,12 +2,21 @@ services:
   - type: web
     name: joblink-backend
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"
+    buildCommand: "pip install -r requirements.txt && python init_db.py"
+    startCommand: "gunicorn -c gunicorn_config.py 'app:create_app()'"
     envVars:
       - key: FLASK_ENV
         value: production
       - key: DATABASE_URL
-        value: sqlite:///joblink.db
+        fromDatabase:
+          name: joblink-db
+          property: connectionString
       - key: SECRET_KEY
         generateValue: true
+      - key: JWT_SECRET_KEY
+        sync: false
+
+databases:
+  - name: joblink-db
+    databaseName: joblink
+    user: joblink_user

@@ -17,7 +17,7 @@ export default function Dashboard() {
         const response = await api.get('/admin/stats');
         setStats(response.data);
       } catch (error) {
-        console.error('Failed to fetch stats:', error);
+        // Error fetching stats
       } finally {
         setLoading(false);
       }

@@ -6,7 +6,7 @@ from models import User, Booking, Payment, ProviderProfile
 bp = Blueprint('admin', __name__)
 
 def require_admin():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
     if not user or user.role != 'admin':
         return jsonify({'message': 'Admin access required'}), 403

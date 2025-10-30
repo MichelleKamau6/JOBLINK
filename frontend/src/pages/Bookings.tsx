@@ -22,7 +22,7 @@ export default function Bookings() {
         const response = await api.get('/bookings');
         setBookings(response.data);
       } catch (error) {
-        console.error('Failed to fetch bookings:', error);
+        // Error fetching bookings
       } finally {
         setLoading(false);
       }
